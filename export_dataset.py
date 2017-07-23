@@ -8,12 +8,17 @@ import json
 def clear_data(data, labeled=False, filtered=False):
     result = []
     index = 0
+    item_id = None
     for d in data:
         index += 1
+        item_id = d.pop('_id')
+        print("#%s, %s, %s: " % (index, item_id, item_id.generation_time.astimezone(tzlocal())), end="")
         if filtered:
             if index % 10 == 3 or index % 10 == 5:
+                print("Skip")
                 continue
-        d.pop('_id')
+        print("Export")
+
         d.pop('evaluation')
         for t in d['thread']:
             t.pop('evaluation')
@@ -29,10 +34,14 @@ def clear_data(data, labeled=False, filtered=False):
             d['users'][0].pop('userType')
             d['users'][1].pop('userType')
         result.append(d)
+    if item_id is not None:
+        print("Last item _id / ts: %s / %s" % (item_id, item_id.generation_time.astimezone(tzlocal())))
+
     return result
 
 
 def export_to_file(name, data, labeled=False, filtered=False):
+    print("\nExport %s\n" % name)
     f = open("export_%s_%s.json" % (name, datetime.datetime.now()), 'w')
     f.write(json.dumps(clear_data(data, labeled, filtered), indent=4, sort_keys=True))
     f.close()

@@ -41,7 +41,7 @@ def clear_data(data, labeled=False, filtered=False):
 
 
 def export_to_file(name, data, labeled=False, filtered=False):
-    print("\nExport %s\n" % name)
+
     f = open("export_%s_%s.json" % (name, datetime.datetime.now()), 'w')
     f.write(json.dumps(clear_data(data, labeled, filtered), indent=4, sort_keys=True))
     f.close()
@@ -56,7 +56,9 @@ def main():
     end_id = ObjectId.from_datetime(datetime.datetime(now.year, now.month, now.day, 23, 59, 59, 999, tzlocal()).astimezone(tzutc()))
     test_set = dialogs.find({'$and': [{'_id': {'$gte': start_id}}, {'_id': {'$lte': end_id}}]}).sort('_id', 1)
     train_set = dialogs.find().sort('_id', 1)
+    print("\nExport test set for day %s\n" % now.date())
     export_to_file('test_set', test_set, labeled=False, filtered=False)
+    print("\nExport train set for day %s\n" % now.date())
     export_to_file('train_set', train_set, labeled=True, filtered=True)
     client.close()
 

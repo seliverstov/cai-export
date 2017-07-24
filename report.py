@@ -27,12 +27,12 @@ def main():
         hourly_users.add(h['users'][0]['id'])
         hourly_users.add(h['users'][1]['id'])
 
-    print("Dialogs created from beginning of the day: %" % daily.count())
-    print("Dialogs created from last hour: %" % hourly.count())
+    print("Dialogs created from beginning of the day: %s" % daily.count())
+    print("Dialogs created from last hour: %s" % hourly.count())
     print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
     print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
 
-
+    client.close()
 
 if __name__ == '__main__':
     main()

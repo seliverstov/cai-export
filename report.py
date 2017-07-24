@@ -39,6 +39,9 @@ def main():
           (hourly.count(), hourly_h2b, hourly.count() - hourly_h2b, len(hourly_users)))
     print("")
     # print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
+    print("Unique users from last hour:")
+    for u in hourly_users:
+        print("\t%s" % u)
     # print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
 
     client.close()

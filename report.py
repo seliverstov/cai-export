@@ -18,19 +18,27 @@ def main():
     hourly = dialogs.find({'_id': {'$gte': hour_id}})
 
     daily_users = set()
+    daily_h2b = 0
     for d in daily:
         daily_users.add(d['users'][0]['username'])
         daily_users.add(d['users'][1]['username'])
+        if d['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or d['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
+            daily_h2b += 1
 
     hourly_users = set()
+    hourly_h2b = 0
     for h in hourly:
         hourly_users.add(h['users'][0]['username'])
         hourly_users.add(h['users'][1]['username'])
+        if d['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or d['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
+            hourly_h2b += 1
 
     print("Dialogs created from beginning of the day: %s" % daily.count())
     print("Dialogs created from last hour: %s" % hourly.count())
     print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
     print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
+    print("%s h2b and %s h2h dialogs from beginning of the day" % (daily_h2b, len(daily) - daily_h2b))
+    print("%s h2b and %s h2h dialogs from last hour" % (hourly_h2b, len(hourly) - hourly_h2b))
 
     client.close()
 

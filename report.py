@@ -19,13 +19,13 @@ def main():
 
     daily_users = set()
     for d in daily:
-        daily_users.add(d['users'][0]['id'])
-        daily_users.add(d['users'][1]['id'])
+        daily_users.add(d['users'][0]['username'])
+        daily_users.add(d['users'][1]['username'])
 
     hourly_users = set()
     for h in hourly:
-        hourly_users.add(h['users'][0]['id'])
-        hourly_users.add(h['users'][1]['id'])
+        hourly_users.add(h['users'][0]['username'])
+        hourly_users.add(h['users'][1]['username'])
 
     print("Dialogs created from beginning of the day: %s" % daily.count())
     print("Dialogs created from last hour: %s" % hourly.count())

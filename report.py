@@ -33,12 +33,11 @@ def main():
         if h['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or h['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
             hourly_h2b += 1
 
-    print("Dialogs created from beginning of the day: %s" % daily.count())
-    print("Dialogs created from last hour: %s" % hourly.count())
+    print("Dialogs created from beginning of the day: %s (h2b: %s, h2h: %s)" % (daily.count(), daily_h2b, daily.count() - daily_h2b))
+    print("Dialogs created from last hour: %s (h2b: %s, h2h: %s)" % (hourly.count(), hourly_h2b, hourly.count() - hourly_h2b))
+    print("")
     print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
     print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
-    print("%s h2b and %s h2h dialogs from beginning of the day" % (daily_h2b, daily.count() - daily_h2b))
-    print("%s h2b and %s h2h dialogs from last hour" % (hourly_h2b, hourly.count() - hourly_h2b))
 
     client.close()
 

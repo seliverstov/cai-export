@@ -26,12 +26,19 @@ def main():
             daily_h2b += 1
 
     hourly_users = set()
+    hourly_bots = set()
     hourly_h2b = 0
     for h in hourly:
         if h['users'][0]['userType'] == 'org.pavlovai.communication.Bot':
+            hourly_bots.add(h['users'][0]['username'])
+        else:
             hourly_users.add(h['users'][0]['username'])
+
         if h['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
+            hourly_bots.add(h['users'][1]['username'])
+        else:
             hourly_users.add(h['users'][1]['username'])
+
         if h['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or h['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
             hourly_h2b += 1
 
@@ -42,7 +49,7 @@ def main():
     print("")
     # print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
     print("Used bots from last hour:")
-    for u in hourly_users:
+    for u in hourly_bots:
         print("\t%s" % u)
     # print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
 

@@ -37,8 +37,8 @@ def main():
     print("Dialogs created from last hour: %s" % hourly.count())
     print("%s unique users from beginning of the day: %s" % (len(daily_users), daily_users))
     print("%s unique users from last hour: %s" % (len(hourly_users), hourly_users))
-    print("%s h2b and %s h2h dialogs from beginning of the day" % (daily_h2b, len(daily) - daily_h2b))
-    print("%s h2b and %s h2h dialogs from last hour" % (hourly_h2b, len(hourly) - hourly_h2b))
+    print("%s h2b and %s h2h dialogs from beginning of the day" % (daily_h2b, daily.count() - daily_h2b))
+    print("%s h2b and %s h2h dialogs from last hour" % (hourly_h2b, hourly.count() - hourly_h2b))
 
     client.close()
 

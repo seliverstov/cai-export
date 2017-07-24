@@ -30,7 +30,7 @@ def main():
     for h in hourly:
         hourly_users.add(h['users'][0]['username'])
         hourly_users.add(h['users'][1]['username'])
-        if d['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or d['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
+        if h['users'][0]['userType'] == 'org.pavlovai.communication.Bot' or h['users'][1]['userType'] == 'org.pavlovai.communication.Bot':
             hourly_h2b += 1
 
     print("Dialogs created from beginning of the day: %s" % daily.count())

@@ -6,6 +6,32 @@ from dateutil.tz import tzutc, tzlocal
 import datetime
 
 
+def ud():
+    team_users = ['Ignecadus', 'locky_kid', 'IFLED', 'justgecko', 'AlexFridman', 'necnec', 'YallenGusev', 'fartuk1',
+                  'mryab', 'akiiino', 'vostrjakov', 'chernovsergey', 'latentbot', 'SkifMax', 'VictorPo', 'zhukov94',
+                  'Username11235', 'IlyaValyaev', 'lextal', 'MacJIeHok', 'olgalind', 'roosh_roosh', 'davkhech',
+                  'mambreyan', 'ashmat98', 'ffuuugor', 'artyomka', 'p_gladkov', 'not_there', 'ad3002', 'gtamazian',
+                  'artkorenev', 'sudakovoleg', 'sin_mike', 'ilya_shenbin', 'Vladislavprh', 'AntonAlexeyev',
+                  'bekerov', 'EvKosheleva', 'sw1sh', 'SDrapak', 'izmailov', 'dlunin', 'Xsardas', 'sparik'
+                  ]
+    tl = [t.lower() for t in team_users]
+    client = MongoClient()
+    db = client['convai-bot']
+    dialogs = db.dialogs
+    day_id = ObjectId.from_datetime(
+        datetime.datetime(2017, 7, 24, 0, 0, 0, 0, tzlocal()).astimezone(tzutc()))
+    daily = dialogs.find({'_id': {'$gte': day_id}})
+    user_dialogs = dict()
+    for d in daily:
+        for u in d['users']:
+            if u['username'] not in user_dialogs:
+                user_dialogs[u['username']] = 0
+                user_dialogs[u['username']] += 1
+    for u in user_dialogs:
+        user_type = 'T' if u.lower() in tl else 'O'
+        print("%s,%s,%s" % (u, user_dialogs[u], user_type))
+    client.close()
+
 def main():
     client = MongoClient()
     db = client['convai-bot']
@@ -59,3 +85,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    ud()

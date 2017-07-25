@@ -4,9 +4,10 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dateutil.tz import tzutc, tzlocal
 import datetime
+import sys
 
 
-def ud():
+def users_stat():
     team_users = ['Ignecadus', 'locky_kid', 'IFLED', 'justgecko', 'AlexFridman', 'necnec', 'YallenGusev', 'fartuk1',
                   'mryab', 'akiiino', 'vostrjakov', 'chernovsergey', 'latentbot', 'SkifMax', 'VictorPo', 'zhukov94',
                   'Username11235', 'IlyaValyaev', 'lextal', 'MacJIeHok', 'olgalind', 'roosh_roosh', 'davkhech',
@@ -32,7 +33,8 @@ def ud():
         print("%s,%s,%s" % (u, user_dialogs[u], user_type))
     client.close()
 
-def main():
+
+def daily_stat():
     client = MongoClient()
     db = client['convai-bot']
     dialogs = db.dialogs
@@ -83,6 +85,18 @@ def main():
 
     client.close()
 
+
+def main():
+    if len(sys.argv) != 2:
+        print("Example: report.py daily_stat | users_stat")
+        sys.exit(1)
+    if sys.argv[1]=='daily_stat':
+        daily_stat()
+    elif sys.argv[1]=='users_stat':
+        users_stat()
+    else:
+        print("Unknown arg: %s" % sys.argv[1])
+        sys.exit(1)
+
 if __name__ == '__main__':
     main()
-    ud()

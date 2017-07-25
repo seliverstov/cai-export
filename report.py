@@ -21,13 +21,15 @@ def users_stat():
     dialogs = db.dialogs
     day_id = ObjectId.from_datetime(
         datetime.datetime(2017, 7, 24, 0, 0, 0, 0, tzlocal()).astimezone(tzutc()))
-    daily = dialogs.find({'_id': {'$gte': day_id}})
+    data = dialogs.find({'_id': {'$gte': day_id}})
     user_dialogs = dict()
-    for d in daily:
+
+    for d in data:
         for u in d['users']:
             if u['username'] not in user_dialogs:
                 user_dialogs[u['username']] = 0
-                user_dialogs[u['username']] += 1
+            user_dialogs[u['username']] += 1
+
     for u in user_dialogs:
         user_type = 'T' if u.lower() in tl else 'O'
         print("%s,%s,%s" % (u, user_dialogs[u], user_type))
@@ -90,9 +92,9 @@ def main():
     if len(sys.argv) != 2:
         print("Example: report.py daily_stat | users_stat")
         sys.exit(1)
-    if sys.argv[1]=='daily_stat':
+    if sys.argv[1] == 'daily_stat':
         daily_stat()
-    elif sys.argv[1]=='users_stat':
+    elif sys.argv[1] == 'users_stat':
         users_stat()
     else:
         print("Unknown arg: %s" % sys.argv[1])

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dateutil.tz import tzutc, tzlocal

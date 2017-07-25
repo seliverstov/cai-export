@@ -36,13 +36,19 @@ def users_stat():
     client.close()
 
 
-def daily_stat():
+def daily_stat(alltime=False):
     client = MongoClient()
     db = client['convai-bot']
     dialogs = db.dialogs
     now = datetime.datetime.now(tzlocal())
-    day_id = ObjectId.from_datetime(
-        datetime.datetime(now.year, now.month, now.day, 0, 0, 0, 0, tzlocal()).astimezone(tzutc()))
+
+    if alltime:
+        day_id = ObjectId.from_datetime(
+            datetime.datetime(2017, 7, 24, 0, 0, 0, 0, tzlocal()).astimezone(tzutc()))
+    else:
+        day_id = ObjectId.from_datetime(
+            datetime.datetime(now.year, now.month, now.day, 0, 0, 0, 0, tzlocal()).astimezone(tzutc()))
+
     hour_id = ObjectId.from_datetime(
         datetime.datetime(now.year, now.month, now.day, now.hour - 1, now.minute, now.second, now.microsecond, tzlocal()).astimezone(tzutc()))
 
@@ -90,12 +96,14 @@ def daily_stat():
 
 def main():
     if len(sys.argv) != 2:
-        print("Example: report.py daily_stat | users_stat")
+        print("Example: report.py daily_stat | alltime_stat | users_stat")
         sys.exit(1)
     if sys.argv[1] == 'daily_stat':
         daily_stat()
     elif sys.argv[1] == 'users_stat':
         users_stat()
+    elif sys.argv[1] == 'alltime_stat':
+        daily_stat(True)
     else:
         print("Unknown arg: %s" % sys.argv[1])
         sys.exit(1)
